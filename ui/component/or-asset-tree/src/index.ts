@@ -1443,6 +1443,22 @@ export class OrAssetTree extends subscribe(manager)(LitElement) {
             delete asset.createdOn;
             delete asset.version;
 
+
+            const realms = ["realm1", "realm2", "realm3"];
+            // Show a confirmation modal before copying
+            const confirmed = await showOkCancelDialog(
+                i18next.t("copyAsset"), // Modal title
+                i18next.t("copyAssetConfirm", {
+                    assetName: asset.name,
+                    realmList: realms.map(r => `- ${r}`).join("\n") // format as a bullet list
+                }),
+                i18next.t("copy")
+            );
+            if (!confirmed) {
+                // User canceled → do nothing
+                return;
+            }
+
             Util.dispatchCancellableEvent(this, new OrAssetTreeRequestAddEvent(
                 {
                     sourceAsset: this._selectedNodes[0].asset!,
