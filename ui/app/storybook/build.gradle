@@ -77,12 +77,12 @@ tasks.register('npmBuild', Exec) {
 }
 
 tasks.register('npmTest', Exec) {
-    dependsOn getYarnInstallTask()
+    dependsOn getYarnInstallTask(), resolveTask(":ui:test:clean")
     commandLine npmCommand("yarn"), "run", "test"
 }
 
 tasks.register('npmTestUI', Exec) {
-    dependsOn getYarnInstallTask()
+    dependsOn getYarnInstallTask(), resolveTask(":ui:test:clean")
     commandLine npmCommand("yarn"), "run", "test", "--ui"
 }
 
@@ -115,3 +115,5 @@ clean.dependsOn(cleanDist)
 jar.dependsOn(generateSources)
 processResources.dependsOn(generateSources)
 sourcesJar.dependsOn(generateSources)
+
+gradle.startParameter.excludedTaskNames += ["${project.path}:test".toString()]

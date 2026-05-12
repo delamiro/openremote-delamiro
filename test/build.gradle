@@ -1,5 +1,4 @@
 plugins {
-    id "jacoco"
     id 'com.adarshr.test-logger' version '4.0.0'
 }
 
@@ -45,44 +44,14 @@ dependencies {
     testImplementation "io.grpc:grpc-protobuf:$grpcVersion"
     testImplementation "io.grpc:grpc-stub:$grpcVersion"
 
-    testImplementation files("../agent/libs/chirpstack-api-4.14.1.jar")
-    testImplementation files("../agent/libs/tts-api-3.34.3.jar")
+    testImplementation "org.bouncycastle:bcpkix-jdk18on:$bouncyCastleVersion"
 }
 
 tasks.withType(Test) {
     environment("OR_LOGGING_CONFIG_FILE", "logging-dev.properties")
 }
 
-test {
-    finalizedBy jacocoTestReport
-}
-
-jacocoTestReport {
-    dependsOn test
-
-    sourceDirectories.from(
-            project(':agent').sourceSets.main.allSource.srcDirs,
-            project(':container').sourceSets.main.allSource.srcDirs,
-            project(':manager').sourceSets.main.allSource.srcDirs,
-            project(':model').sourceSets.main.allSource.srcDirs,
-            project(':model-util').sourceSets.main.allSource.srcDirs,
-            project(':setup').sourceSets.main.allSource.srcDirs
-    )
-
-    classDirectories.from(
-            project(':agent').sourceSets.main.output,
-            project(':container').sourceSets.main.output,
-            project(':manager').sourceSets.main.output,
-            project(':model').sourceSets.main.output,
-            project(':model-util').sourceSets.main.output,
-            project(':setup').sourceSets.main.output
-    )
-
-    reports {
-        xml.required = true
-        html.required = true
-    }
-}
+test {}
 
 javadoc {
     failOnError = false
