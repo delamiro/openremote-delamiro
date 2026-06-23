@@ -342,6 +342,8 @@
     "cubed": "³",
     "peak": "p",
     "mega": "M",
+    "giga": "G",
+    "tera": "T",
     "kilo": "k",
     "centi": "c",
     "milli": "m",
@@ -504,7 +506,7 @@
   "yes": "Ja",
   "no": "Nein",
   "filter": {
-    "action": "FILTER",
+    "action": "Filter",
     "assetTypeLabel": "Asset type",
     "assetTypeNone": "None",
     "assetTypeMenuNone": "None",
